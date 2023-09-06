@@ -26,7 +26,7 @@ const Sidebar = () => {
         }`}
         onClick={toggleSidebar}
       >
-      <div className="cursor-pointer">
+      <div className="cursor-pointer w-[3%] mt-[-1%]">
           <FaAngleDoubleRight className=' w-12 mt-3 h-8 text-greenbg hover:text-yellow'/>
         </div>
       </div>

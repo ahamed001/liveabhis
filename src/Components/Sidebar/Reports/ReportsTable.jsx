@@ -118,9 +118,9 @@ const ReportsTable = () => {
 
   return (
    
-    <div className='absolute flex justify-center left-[5%] translate-y-[30%] overflow-y-scroll rounded-lg w-full px-64'>
+    <div className='absolute flex justify-center left-[15%] translate-y-[30%] overflow-y-scroll rounded-lg w-[85%] px-64'>
 
-    <div className='grid grid-cols-2'>
+    <form className='grid grid-cols-2'>
       
       <div className=' border-greenbg outline-greenbg mx-2 mt-2 w-full'>
         <Select 
@@ -244,12 +244,12 @@ const ReportsTable = () => {
 
       <div></div>
 
-      <div className='flex justify-center my-3 w-[140%]'>
-        <button className='p-2 bg-greenbg text-white border-greenbg border-2 w-[50%] my-2 mx-2 translate-x-[50%] rounded-md border-none outline-none hover:bg-yellow'>Generate</button> 
-        <button className='p-2 bg-greenbg text-white border-greenbg border-2 w-[50%] my-2 mx-2 translate-x-[50%] rounded-md border-none outline-none hover:bg-yellow'>Reset</button> 
+      <div className='flex justify-center my-3 w-[210%]'>
+        <button className='p-2 bg-greenbg text-white border-greenbg border-2 w-[50%] my-2 mx-2 rounded-md border-none outline-none hover:bg-yellow'>Generate</button> 
+        <button className='p-2 bg-greenbg text-white border-greenbg border-2 w-[50%] my-2 mx-2 rounded-md border-none outline-none hover:bg-yellow'>Reset</button> 
       </div>
 
-    </div>
+    </form>
 
     <Outlet/>
 

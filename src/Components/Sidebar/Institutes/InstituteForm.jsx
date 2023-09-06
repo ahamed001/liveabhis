@@ -1,33 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { Country, State } from "country-state-city";
 import Select from 'react-select';
 import { Outlet } from 'react-router-dom'
 import { FaVrCardboard } from 'react-icons/fa';
 
 const InstituteForm = () => {
-  
-  const [countries, setCountries] = useState([]);
+
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedState, setSelectedState] = useState(null);
 
   useEffect(() => {
-    // Fetch countries data from the API
-    fetch('https://restcountries.com/v3.1/all')
-      .then((response) => response.json())
-      .then((data) => {
-
-        // Format the data into options for react-select
-        const countryOptions = data.map((country) => ({
-          value: country.cca2,
-          label: country.name.common,
-        }));
-        setCountries(countryOptions);
-      });
-  }, []);
-
-  const handleCountryChange = (selectedOption) => {
-    setSelectedCountry(selectedOption);
-  };
+    console.log(selectedCountry?.isoCode);
+    console.log(State?.getStatesOfCountry(selectedCountry?.isoCode));
+  }, [selectedCountry]);
 
   const placeholdercountry = 'Country';
+  const placeholderstate = 'State';
 
   const [branchcount, setbranchcount] = useState(0);
   const [studentcount, setstudentcount] = useState(0);
@@ -122,11 +110,11 @@ const InstituteForm = () => {
 
   return (
  
-    <div className='absolute left-[5%] translate-y-[2%] overflow-y-scroll rounded-lg w-full px-64'>
+    <div className='absolute w-[85%] left-[15%] translate-y-[2%] h-[80vh] overflow-y-scroll rounded-lg px-64'>
         
     <input type="file" name="pfp" accept="image/*" className='rounded-full my-3 h-36 w-36 text-transparent bg-transparent bg-opacity-0 object-none border-greenbg border-2 cursor-pointer' />
 
-    <div className='grid grid-cols-3'>
+    <form className='grid grid-cols-3'>
     
       <input type="text" placeholder='Institute ID' required className='p-5 bg-gray-100 border-greenbg border-2 w-full h-2 my-2 mx-2 rounded-md'/>
       <input type="text" placeholder='Institute Name' required className='p-5 bg-gray-100 border-greenbg border-2 w-full h-2 my-2 mx-5 rounded-md'/>
@@ -147,13 +135,41 @@ const InstituteForm = () => {
       <input type="text" placeholder='Area' required className='p-5 bg-gray-100 border-greenbg border-2 w-full h-2 my-2 mx-2 rounded-md'/>
       <input type="text" placeholder='Pin Code' required className='p-5 bg-gray-100 border-greenbg border-2 w-full h-2 my-2 mx-5 rounded-md'/>
 
-      <div className=' border-greenbg outline-greenbg ml-8 mr-2 mt-2 w-full'>
-        <Select
-          value={selectedCountry}
-          onChange={handleCountryChange}
-          options={countries}
-          placeholder={placeholdercountry}
-        />
+      <div className='flex w-[113%]'>
+      <div className=' border-greenbg outline-greenbg ml-8 mt-2 w-full'>
+      <Select
+        options={Country.getAllCountries()}
+        getOptionLabel={(options) => {
+          return options["name"];
+        }}
+        getOptionValue={(options) => {
+          return options["name"];
+        }}
+        value={selectedCountry}
+        onChange={(item) => {
+          setSelectedCountry(item);
+        }}
+        placeholder={placeholdercountry}
+      />
+      </div>
+
+      <div className=' border-greenbg outline-greenbg ml-2 mt-2 w-full'>
+      <Select
+        options={State?.getStatesOfCountry(selectedCountry?.isoCode)}
+        getOptionLabel={(options) => {
+          return options["name"];
+        }}
+        getOptionValue={(options) => {
+          return options["name"];
+        }}
+        value={selectedState}
+        onChange={(item) => {
+          setSelectedState(item);
+        }}
+        placeholder={placeholderstate}
+      />
+      </div>
+
       </div>
       
       <input type="text" placeholder='State' required className='p-5 bg-gray-100 border-greenbg border-2 w-full h-2 my-2 mx-2 rounded-md'/>
@@ -227,26 +243,32 @@ const InstituteForm = () => {
       <button onClick={incountcloud}className=' w-5 h-5 text-4xl mb-8 text-center'>+</button>
       
       </div>
-        
-      <div className="relative flex items-center cursor-pointer justify-around my-2 ">
 
-      <FaVrCardboard className=' text-3xl '/>
+      <div className='flex'>
+      <div className='my-4 mx-4 px-6 w-20'>
+      <FaVrCardboard className=' text-3xl'/>
+      </div>
         
+      <div className="relative cursor-pointer w-20 justify-around p-1 my-4">
+  
         <label>
           <input type="checkbox" className="sr-only peer" />
-          <div className="w-11 h-6 peer-focus:outline-none rounded-full peer dark:bg-gray-400 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[5px] after:left-[94px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#5BC236]"/>
+          <div className="w-11 h-6 peer-focus:outline-none rounded-full peer dark:bg-gray-400 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[5px] after:left-[7px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#53D769]"/>
         </label>
 
       </div>
-
       </div>
 
-      <div className='flex justify-center mt-3'>
+      <div></div>
+      <div></div>
+      
+      <div className='flex justify-center w-[300%]'>
         <button className='p-2 bg-greenbg text-white border-greenbg border-2 text-sm w-32 my-2 mx-2 rounded-md border-none outline-none hover:bg-yellow'>Reset</button> 
         <button className='p-2 bg-greenbg text-white border-greenbg border-2 text-sm w-32 my-2 mx-2 rounded-md border-none outline-none hover:bg-yellow'>Submit</button> 
         <button className='p-2 bg-greenbg text-white border-greenbg border-2 text-sm w-32 my-2 mx-2 rounded-md border-none outline-none hover:bg-yellow'>Submit & Add</button> 
       </div>
 
+      </form>
 
   <Outlet/>
 
